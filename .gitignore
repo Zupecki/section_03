@@ -1,1 +1,10 @@
+### Unreal Derived ###
+*/Build/
+*/Binaries/
+*/DerivedDataCache
+*/Intermediate/
+*/Saved/
+BuildingEscape/Content/StarterContent
 
+### Visual Studio Derived ###
+*.VC.db
