@@ -2,6 +2,7 @@
 
 #include "BuildingEscape.h"
 #include "PositionReport.h"
+#include "Gameframework/Actor.h"
 
 
 // Sets default values for this component's properties
@@ -20,7 +21,14 @@ void UPositionReport::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	// Get Actor name via pointer reference
+	FString ObjectName = GetOwner()->GetName();
+
+	// Get Actor position via pointer reference
+	FString ObjectPos = GetOwner()->GetTransform().GetLocation().ToString();
+
+	// Dereference pointer since otherwise it will print address
+	UE_LOG(LogTemp, Warning, TEXT("WARNING: Position Report - %s is at location %s"), *ObjectName, *ObjectPos);
 	
 }
 
