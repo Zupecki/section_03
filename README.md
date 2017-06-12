@@ -1,2 +1,2 @@
 # section_03
-Section 3 of Udemy Course
+BuildingEscape section of Ben Tristem's Udemy Course on Unreal Engine 4.
