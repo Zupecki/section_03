@@ -22,7 +22,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	float GetOpenAngle();
+	bool CheckPressurePlate();
 
-		
-	
+private:
+	UPROPERTY(EditAnywhere)
+	float OpenAngle = -170.0f;
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* PressurePlate;
+
+	UPROPERTY(EditAnywhere)
+	AActor* Player;
 };
