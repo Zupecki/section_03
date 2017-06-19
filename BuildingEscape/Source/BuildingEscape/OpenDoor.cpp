@@ -3,7 +3,6 @@
 #include "BuildingEscape.h"
 #include "OpenDoor.h"
 
-
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
@@ -20,20 +19,8 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Open door by manipulating the Rotation Transforms
-	float OpenAngle = GetOpenAngle();
-	AActor* Owner = GetOwner();
-	FRotator NewRotation = FRotator(0.0f, OpenAngle, 0.0f);
-
-	if (CheckPressurePlate()) {
-		Owner->SetActorRotation(NewRotation);
-	}
-	else {
-		OpenAngle = 0.0f;
-		Owner->SetActorRotation(NewRotation);
-	}
-	
-	
+	//Get pawn
+	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 
@@ -42,18 +29,33 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (CheckPressurePlate() && IsOpen == false) {
+		IsOpen = true;
+		ChangeDoor(GetOpenAngle());
+	}
+	else if (!CheckPressurePlate() && IsOpen == true)
+	{
+		IsOpen = false;
+		ChangeDoor(GetClosedAngle());
+	}
 }
+
 
 float UOpenDoor::GetOpenAngle()
 {
 	return OpenAngle;
 }
 
+float UOpenDoor::GetClosedAngle()
+{
+	return ClosedAngle;
+}
+
 bool UOpenDoor::CheckPressurePlate()
 {
 	if (PressurePlate->IsOverlappingActor(Player))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("WARNING: Collision - IS clipping"));
 		return true;
 	}
 	else
@@ -62,3 +64,10 @@ bool UOpenDoor::CheckPressurePlate()
 	}
 }
 
+void UOpenDoor::ChangeDoor(float NewAngle)
+{
+	AActor* Owner = GetOwner();
+	FRotator NewRotation = FRotator(0.0f, NewAngle, 0.0f);
+
+	Owner->SetActorRotation(NewRotation);
+}
