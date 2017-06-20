@@ -29,14 +29,15 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	//Check if door is closed and if pressure plate is colliding with Player Pawn
 	if (CheckPressurePlate() && IsOpen == false) {
-		IsOpen = true;
 		ChangeDoor(GetOpenAngle());
+		IsOpen = true;
 	}
 	else if (!CheckPressurePlate() && IsOpen == true)
 	{
-		IsOpen = false;
 		ChangeDoor(GetClosedAngle());
+		IsOpen = false;
 	}
 }
 
@@ -66,6 +67,7 @@ bool UOpenDoor::CheckPressurePlate()
 
 void UOpenDoor::ChangeDoor(float NewAngle)
 {
+	//Get the owner of the script (door), create new Rotator object and pass into owner
 	AActor* Owner = GetOwner();
 	FRotator NewRotation = FRotator(0.0f, NewAngle, 0.0f);
 
