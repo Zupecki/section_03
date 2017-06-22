@@ -21,6 +21,8 @@ void UOpenDoor::BeginPlay()
 
 	//Get pawn
 	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
+	Owner = GetOwner();
+	World = GetWorld();
 }
 
 
@@ -34,7 +36,8 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 		ChangeDoor(GetOpenAngle());
 		IsOpen = true;
 	}
-	else if (!CheckPressurePlate() && IsOpen == true)
+
+	if (World->GetTimeSeconds() - DoorChangeTime >= 1.0f && IsOpen == true)
 	{
 		ChangeDoor(GetClosedAngle());
 		IsOpen = false;
@@ -52,6 +55,11 @@ float UOpenDoor::GetClosedAngle()
 	return ClosedAngle;
 }
 
+void UOpenDoor::SetDoorTimer(float Seconds)
+{
+	DoorChangeTime = Seconds;
+}
+
 bool UOpenDoor::CheckPressurePlate()
 {
 	if (PressurePlate->IsOverlappingActor(Player))
@@ -67,9 +75,7 @@ bool UOpenDoor::CheckPressurePlate()
 
 void UOpenDoor::ChangeDoor(float NewAngle)
 {
-	//Get the owner of the script (door), create new Rotator object and pass into owner
-	AActor* Owner = GetOwner();
-	FRotator NewRotation = FRotator(0.0f, NewAngle, 0.0f);
-
-	Owner->SetActorRotation(NewRotation);
+	//Set new rotation angle for Owner asset
+	Owner->SetActorRotation(FRotator(0.0f, NewAngle, 0.0f));
+	SetDoorTimer(World->GetTimeSeconds());
 }

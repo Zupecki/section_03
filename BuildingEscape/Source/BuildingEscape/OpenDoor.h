@@ -26,6 +26,7 @@ public:
 	float GetClosedAngle();
 	bool CheckPressurePlate();
 	void ChangeDoor(float NewAngle);
+	void SetDoorTimer(float Seconds);
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -37,8 +38,10 @@ private:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
 
-	UPROPERTY(EditAnywhere)
+	AActor* Owner;
 	AActor* Player;
+	UWorld* World;
 
+	float DoorChangeTime = 0.0f;
 	bool IsOpen = false;
 };
