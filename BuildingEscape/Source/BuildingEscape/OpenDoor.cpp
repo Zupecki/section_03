@@ -36,6 +36,11 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 		ChangeDoor(GetOpenAngle());
 	}
 
+	//If door is already open and player is on PressurePlate (maybe they came back while it was still open), keep resetting timer
+	if (CheckPressurePlate() && IsOpen == true) {
+		SetDoorChangeTime(World->GetTimeSeconds());
+	}
+
 	//Check of door is open and pressure plate isn't being stood on - then start timer to close door
 	if (!CheckPressurePlate() && IsOpen == true)
 	{
@@ -86,6 +91,11 @@ bool UOpenDoor::DelayTimer()
 {
 	//Set timer begin time
 	float CurrentTime = World->GetTimeSeconds();
+	//float Timer = CurrentTime - DoorChangeTime;
+
+	//FString TimeCount = FString::SanitizeFloat(Timer);
+
+	//UE_LOG(LogTemp, Warning, TEXT("Timer: %s"), TimeCount);
 
 	//If a set amount of time has passed since no pressure on PressurePad
 	if (CurrentTime - DoorChangeTime >= DoorTimer)
@@ -100,7 +110,7 @@ void UOpenDoor::ChangeDoor(float NewAngle)
 {
 	//Set new rotation angle for Owner asset
 	Owner->SetActorRotation(FRotator(0.0f, NewAngle, 0.0f));
-
+	
 	//Set door state and open timer settable
 	if (IsOpen == false)
 	{
