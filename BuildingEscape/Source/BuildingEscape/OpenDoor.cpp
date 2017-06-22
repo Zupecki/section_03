@@ -91,11 +91,6 @@ bool UOpenDoor::DelayTimer()
 {
 	//Set timer begin time
 	float CurrentTime = World->GetTimeSeconds();
-	//float Timer = CurrentTime - DoorChangeTime;
-
-	//FString TimeCount = FString::SanitizeFloat(Timer);
-
-	//UE_LOG(LogTemp, Warning, TEXT("Timer: %s"), TimeCount);
 
 	//If a set amount of time has passed since no pressure on PressurePad
 	if (CurrentTime - DoorChangeTime >= DoorTimer)
