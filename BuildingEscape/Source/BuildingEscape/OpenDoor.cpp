@@ -65,7 +65,7 @@ float UOpenDoor::GetClosedAngle()
 
 void UOpenDoor::SetDoorChangeTime(float Seconds)
 {
-	//Set timer, lock it to prevent ticket constantly updating
+	//Set timer, lock it to prevent ticker constantly updating
 	DoorChangeTime = Seconds;
 	TimerSettable = false;
 }
