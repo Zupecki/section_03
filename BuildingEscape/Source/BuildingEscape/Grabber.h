@@ -24,7 +24,14 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+	//Player viewpoint
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
+
+	UPROPERTY(EditAnywhere)
+	float Reach = 100.0f;
+
+	UPROPERTY(EditAnywhere)
+	FColor DebugLineColor = FColor(255.0f, 0.0f, 0.0f, 0.0f);
 	
 };
