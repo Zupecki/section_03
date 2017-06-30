@@ -24,12 +24,17 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	//Player viewpoint
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
+	UWorld* World;
+	FHitResult Hit;
+
+	//Query Parameters - No name, simple colliders, ignore pawn, hit physicsbody
+	FCollisionQueryParams TraceCollisionParams = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());
+	FCollisionObjectQueryParams TraceObjectParams = FCollisionObjectQueryParams(ECollisionChannel(ECollisionChannel::ECC_PhysicsBody));
 
 	UPROPERTY(EditAnywhere)
-	float Reach = 100.0f;
+	float Reach = 150.0f;
 
 	UPROPERTY(EditAnywhere)
 	FColor DebugLineColor = FColor(255.0f, 0.0f, 0.0f, 0.0f);

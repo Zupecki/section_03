@@ -21,6 +21,7 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber is on!"));
+	World = GetWorld();
 
 }
 
@@ -31,13 +32,19 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// Get the Player Viewpoint - location and rotation - and return them, output results
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
-	UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
+	World->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
 
-	// Raycast out into the world
+	// Set raycast vector endpoint
 	FVector LineTraceEndPoint = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
-	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
 
-	// Return object that raycast hits
+	// Raycast and store in Hit
+	World->LineTraceSingleByObjectType(Hit, PlayerViewPointLocation, LineTraceEndPoint, TraceObjectParams, TraceCollisionParams);
+
+	// Debug stuff
+	if (Hit.GetActor()) {
+		UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *(Hit.GetActor()->GetName()));
+	}
+	//UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
+	//DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
 }
 
