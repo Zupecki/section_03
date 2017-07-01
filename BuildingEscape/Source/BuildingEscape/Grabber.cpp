@@ -45,6 +45,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *(Hit.GetActor()->GetName()));
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
-	//DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
+	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
 }
 
