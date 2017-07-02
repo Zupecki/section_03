@@ -45,7 +45,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	World->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
 
 	// Set raycast vector endpoint
-	FVector LineTraceEndPoint = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
+	FVector LineTraceEndPoint = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
 
 	// Raycast and store in Hit
 	FHitResult LocalHit;
