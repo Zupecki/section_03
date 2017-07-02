@@ -28,6 +28,7 @@ private:
 	FRotator PlayerViewPointRotation;
 	UWorld* World;
 	FHitResult Hit;
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 
 	//Query Parameters - No name, simple colliders, ignore pawn, hit physicsbody
 	FCollisionQueryParams TraceCollisionParams = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());
