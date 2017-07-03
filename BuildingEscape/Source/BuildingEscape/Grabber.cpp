@@ -55,7 +55,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		if (Hit.GetActor()->GetName() != LastHitActorName)
 		{
 			LastHitActorName = Hit.GetActor()->GetName();
-			UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *(Hit.GetActor()->GetName()));
+			UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *LastHitActorName);
 		}
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
