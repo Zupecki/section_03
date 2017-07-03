@@ -29,6 +29,7 @@ private:
 	UWorld* World;
 	FHitResult Hit;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	FString LastHitActorName = "";
 
 	//Query Parameters - No name, simple colliders, ignore pawn, hit physicsbody
 	FCollisionQueryParams TraceCollisionParams = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());

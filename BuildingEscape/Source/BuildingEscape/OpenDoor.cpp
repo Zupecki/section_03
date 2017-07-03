@@ -20,9 +20,10 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 
 	//Get pointers to necessary objects
-	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
-	Owner = GetOwner();
 	World = GetWorld();
+	Player = World->GetFirstPlayerController()->GetPawn();
+	Owner = GetOwner();
+	
 }
 
 

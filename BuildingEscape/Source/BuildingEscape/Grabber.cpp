@@ -48,13 +48,15 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector LineTraceEndPoint = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
 
 	// Raycast and store in Hit
-	FHitResult LocalHit;
-	World->LineTraceSingleByObjectType(LocalHit, PlayerViewPointLocation, LineTraceEndPoint, TraceObjectParams, TraceCollisionParams);
+	World->LineTraceSingleByObjectType(Hit, PlayerViewPointLocation, LineTraceEndPoint, TraceObjectParams, TraceCollisionParams);
 
-	// Debug stuff
-	if (Hit.GetActor() != LocalHit.GetActor()) {
-		Hit = LocalHit;
-		UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *(Hit.GetActor()->GetName()));
+	// Debug stuff - if there is an Actor in Hit, then check previous name and if new then report
+	if (Hit.GetActor()) {
+		if (Hit.GetActor()->GetName() != LastHitActorName)
+		{
+			LastHitActorName = Hit.GetActor()->GetName();
+			UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *(Hit.GetActor()->GetName()));
+		}
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
 	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
