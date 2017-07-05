@@ -23,14 +23,21 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	void DebugInfo();
+	void SetLineTraceEndPoint();
+	void Grab();
+	void GetRequiredObjects();
+
 private:
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
+	FVector LineTraceEndPoint;
 	UWorld* World;
 	FHitResult Hit;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	UInputComponent* Input;
 	FString LastHitActorName = "";
-
+	
 	//Query Parameters - No name, simple colliders, ignore pawn, hit physicsbody
 	FCollisionQueryParams TraceCollisionParams = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());
 	FCollisionObjectQueryParams TraceObjectParams = FCollisionObjectQueryParams(ECollisionChannel(ECollisionChannel::ECC_PhysicsBody));
@@ -40,5 +47,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	FColor DebugLineColor = FColor(255.0f, 0.0f, 0.0f, 0.0f);
+
+	UPROPERTY(EditAnywhere)
+	bool ShowDebugInfo = false;
+
 	
 };

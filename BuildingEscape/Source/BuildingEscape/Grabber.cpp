@@ -20,19 +20,27 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetRequiredObjects();
+	
+}
+
+// Get required objects
+void UGrabber::GetRequiredObjects()
+{
 	World = GetWorld();
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
-	// Check for Physics Handle
-	if (PhysicsHandle != nullptr)
-	{
+	/// Get and set InputComponent
+	Input = GetOwner()->FindComponentByClass<UInputComponent>();
 
+	if (Input)
+	{
+		Input->BindAction("Grab", EInputEvent::IE_Pressed, this, &UGrabber::Grab);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Physics Handle not found!"));
+		UE_LOG(LogTemp, Error, TEXT("Input Component not found by %s Class"), *this->GetName());
 	}
-
 }
 
 
@@ -41,16 +49,36 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// Get the Player Viewpoint - location and rotation - and return them, output results
+	/// Get the Player Viewpoint - location and rotation - and return them, output results
 	World->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
 
-	// Set raycast vector endpoint
-	FVector LineTraceEndPoint = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
+	/// Set raycast vector endpoint
+	SetLineTraceEndPoint();
 
-	// Raycast and store in Hit
+	/// Raycast and store in Hit
 	World->LineTraceSingleByObjectType(Hit, PlayerViewPointLocation, LineTraceEndPoint, TraceObjectParams, TraceCollisionParams);
 
-	// Debug stuff - if there is an Actor in Hit, then check previous name and if new then report
+	/// Debug
+	if (ShowDebugInfo)
+	{
+		DebugInfo();
+	}
+	
+}
+
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s Class pressed Grab"), *this->GetName());
+}
+
+void UGrabber::SetLineTraceEndPoint()
+{
+	LineTraceEndPoint = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
+}
+
+void UGrabber::DebugInfo()
+{
+	/// Report the name of the object hit
 	if (Hit.GetActor()) {
 		if (Hit.GetActor()->GetName() != LastHitActorName)
 		{
@@ -58,7 +86,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 			UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *LastHitActorName);
 		}
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
+	///UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
 	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
 }
 
