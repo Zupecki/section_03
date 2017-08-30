@@ -50,6 +50,4 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	bool ShowDebugInfo = false;
-
-	
 };

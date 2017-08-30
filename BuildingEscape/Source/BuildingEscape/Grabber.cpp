@@ -3,6 +3,8 @@
 #include "BuildingEscape.h"
 #include "Grabber.h"
 
+#define OUT
+
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -49,14 +51,14 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	/// Get the Player Viewpoint - location and rotation - and return them, output results
-	World->GetFirstPlayerController()->GetPlayerViewPoint(PlayerViewPointLocation, PlayerViewPointRotation);
+	/// Get the Player Viewpoint from World - location and rotation - and return them, output results - OUT
+	World->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
 
 	/// Set raycast vector endpoint
 	SetLineTraceEndPoint();
 
 	/// Raycast and store in Hit
-	World->LineTraceSingleByObjectType(Hit, PlayerViewPointLocation, LineTraceEndPoint, TraceObjectParams, TraceCollisionParams);
+	World->LineTraceSingleByObjectType(OUT Hit, PlayerViewPointLocation, LineTraceEndPoint, TraceObjectParams, TraceCollisionParams);
 
 	/// Debug
 	if (ShowDebugInfo)
@@ -78,7 +80,7 @@ void UGrabber::SetLineTraceEndPoint()
 
 void UGrabber::DebugInfo()
 {
-	/// Report the name of the object hit
+	/// Report the name of the object hit if name different to recent object hit
 	if (Hit.GetActor()) {
 		if (Hit.GetActor()->GetName() != LastHitActorName)
 		{
@@ -86,7 +88,8 @@ void UGrabber::DebugInfo()
 			UE_LOG(LogTemp, Warning, TEXT("%s has been hit by raycast"), *LastHitActorName);
 		}
 	}
-	///UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
-	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
+
+	//UE_LOG(LogTemp, Warning, TEXT("Location is: %s and Rotation is: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
+	DrawDebugLine(World, PlayerViewPointLocation, LineTraceEndPoint, DebugLineColor, false, 0.0f, 0.0f, 10.0f);
 }
 
