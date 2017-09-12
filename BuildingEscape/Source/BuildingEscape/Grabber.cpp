@@ -1,10 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "BuildingEscape.h"
 #include "Grabber.h"
+#include "BuildingEscape.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 
 #define OUT
-
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
