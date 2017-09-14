@@ -10,3 +10,7 @@ BuildingEscape/Content/StarterContent
 ### Visual Studio Derived ###
 *.VC.db
 *.VC.opendb
+BuildingEscape/.vs/BuildingEscape/v15/ipch/AutoPCH/BUILDINGESCAPE-f50d5cf3/OPENDOOR-955fc39c/OPENDOOR.ipch
+BuildingEscape/.vs/BuildingEscape/v15/ipch/AutoPCH/BUILDINGESCAPE-f50d5cf3/GRABBER-6a911a8b/GRABBER.ipch
+BuildingEscape/.vs/BuildingEscape/v15/Solution.VC.db-wal
+BuildingEscape/.vs/BuildingEscape/v15/Solution.VC.db-shm
