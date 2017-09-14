@@ -2,10 +2,14 @@
 
 #pragma once
 
+#include "BuildingEscape.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/PlayerController.h"
 #include "Components/ActorComponent.h"
+#include "Engine/World.h"
+#include "DrawDebugHelpers.h"
 #include "Grabber.generated.h"
-
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UGrabber : public UActorComponent
@@ -35,7 +39,7 @@ private:
 	FVector LineTraceEndPoint;
 	UWorld* World;
 	FHitResult Hit;
-	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	UPhysicsHandleComponent *PhysicsHandle = nullptr;
 	UInputComponent* Input;
 	FString LastHitActorName = "";
 	

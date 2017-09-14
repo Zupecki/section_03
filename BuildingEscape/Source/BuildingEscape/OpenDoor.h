@@ -2,9 +2,12 @@
 
 #pragma once
 
+#include "BuildingEscape.h"
+#include "Engine/TriggerVolume.h"
 #include "Components/ActorComponent.h"
+#include "Engine/World.h"
+#include "GameFramework/PlayerController.h"
 #include "OpenDoor.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UOpenDoor : public UActorComponent

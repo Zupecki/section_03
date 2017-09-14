@@ -9,8 +9,8 @@ public class BuildingEscapeEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 
-       // bUseUnityBuild = false;
-       // bUsePCHFiles = false;
+        //bUseUnityBuild = false;
+        //bUsePCHFiles = false;
 	}
 
 	//
